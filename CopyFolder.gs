@@ -3,7 +3,7 @@ function copiaCarpeta(idOrigen,destino){
   var origen = DriveApp.getFolderById(idOrigen)
   var destino = destino || DriveApp.createFolder("Copia de "+origen.getName())
   
-  //Copia los archivos 
+  //1 Copia los archivos dentro de la carpeta origen
   var iFiles = origen.getFiles()
   while(iFiles.hasNext())
   {
@@ -11,13 +11,13 @@ function copiaCarpeta(idOrigen,destino){
     archivo.makeCopy(archivo.getName(),destino)
   }
   
-  //Copia las carpetas 
+  //2 Copia las carpetas de la ruta origen
   var iFolders = origen.getFolders()
   while(iFolders.hasNext())
   {
     var subcarpeta = iFolders.next()
     var subDestino = destino.createFolder(subcarpeta.getName())
-    //Recursivo
+    //Recursivo para aplicar la funcion a las carpetas dentro del origen
     copiaCarpeta(subcarpeta.getId(),subDestino)
   }
   
